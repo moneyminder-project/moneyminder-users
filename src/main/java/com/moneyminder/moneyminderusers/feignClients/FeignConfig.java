@@ -1,6 +1,5 @@
 package com.moneyminder.moneyminderusers.feignClients;
 
-import com.moneyminder.moneyminderusers.feignClients.FeignRequestInterceptor;
 import feign.RequestInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

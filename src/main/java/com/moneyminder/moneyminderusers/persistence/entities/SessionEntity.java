@@ -25,7 +25,6 @@ public class SessionEntity {
     @Column(name = "EXPIRATION_DATE", nullable = false)
     private LocalDate expirationDate;
 
-    //RELACIÓN CON USER
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USERNAME", nullable = false)
     private UserEntity user;
