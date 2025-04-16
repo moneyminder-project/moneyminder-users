@@ -35,6 +35,11 @@ public class GroupController {
         return ResponseEntity.ok(this.retrieveGroupProcessor.retrieveGroupIdsByUsername(username));
     }
 
+    @GetMapping("/usernames-of/{groupId}")
+    public ResponseEntity<List<String>> getGroupIdsByUsernameOfGroup(@PathVariable String groupId) {
+        return ResponseEntity.ok(this.retrieveGroupProcessor.retrieveUsernameOfGroup(groupId));
+    }
+
     @PostMapping()
     public ResponseEntity<Group> createGroup(@Valid @RequestBody final Group group) {
         return ResponseEntity.ok(this.saveGroupProcessor.saveGroup(group));
