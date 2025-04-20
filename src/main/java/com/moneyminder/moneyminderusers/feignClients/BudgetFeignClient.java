@@ -8,6 +8,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface BudgetFeignClient {
 
     @GetMapping("/budget-name/{id}")
-    String getBudgetNameById(@PathVariable String id);
+    String getBudgetNameByGroupId(@PathVariable String id);
 
 }

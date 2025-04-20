@@ -17,14 +17,17 @@ public class GroupRequestEntity {
     @Column(name = "ID", columnDefinition = "CHAR(36)")
     private String id;
 
+    //RELACIÓN CON GROUP
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "GROUP_ID", nullable = false)
     private GroupEntity group;
 
+    //RELACIÓN CON USER REQUESTING
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "REQUESTING_USERNAME", nullable = false)
     private UserEntity requestingUser;
 
+    //RELACIÓN CON USER REQUESTED
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "REQUESTED_USERNAME", nullable = false)
     private UserEntity requestedUser;

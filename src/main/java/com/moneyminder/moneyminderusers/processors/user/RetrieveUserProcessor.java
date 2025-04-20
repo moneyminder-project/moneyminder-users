@@ -30,4 +30,8 @@ public class RetrieveUserProcessor {
         userResponse.setEmail(user.getEmail());
         return userResponse;
     }
+
+    public UserEntity retrieveCompleteUserByUsernameOrEmail(String id) {
+        return this.userRepository.findByUsernameOrEmail(id, id).orElseThrow();
+    }
 }

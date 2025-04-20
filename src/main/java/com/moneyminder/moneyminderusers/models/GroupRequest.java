@@ -15,7 +15,6 @@ import java.time.LocalDate;
 public class GroupRequest {
 
     private String id;
-    @NotBlank(message = "La solicitud debe esta asociada a un grupo")
     private String group;
     @NotBlank(message = "La solicitud debe estar asociada a un solicitante")
     private String requestingUser;

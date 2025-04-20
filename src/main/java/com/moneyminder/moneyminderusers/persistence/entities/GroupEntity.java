@@ -20,6 +20,7 @@ public class GroupEntity {
     @Column(name = "NAME", nullable = false)
     private String name;
 
+    //RELACIÓN CON USERS
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "GROUPS_USERS",
@@ -28,6 +29,7 @@ public class GroupEntity {
     )
     private List<UserEntity> users;
 
+    //RELACIÓN CON GROUP REQUEST
     @OneToMany(mappedBy = "group", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<GroupRequestEntity> groupRequests;
 }

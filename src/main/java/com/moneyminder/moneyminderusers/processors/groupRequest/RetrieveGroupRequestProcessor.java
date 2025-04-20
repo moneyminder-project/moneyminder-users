@@ -35,7 +35,7 @@ public class RetrieveGroupRequestProcessor {
             final GroupRequestWithBudgetNameDto groupRequestWithBudgetName = new GroupRequestWithBudgetNameDto();
             groupRequestWithBudgetName.groupToWithBudgetName(group);
 
-            final String budgetName = budgetFeignClient.getBudgetNameById(group.getGroup());
+            final String budgetName = budgetFeignClient.getBudgetNameByGroupId(group.getGroup());
             groupRequestWithBudgetName.setBudgetName(budgetName);
 
             groupsList.add(groupRequestWithBudgetName);
