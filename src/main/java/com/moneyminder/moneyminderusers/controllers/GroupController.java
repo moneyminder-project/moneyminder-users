@@ -56,7 +56,7 @@ public class GroupController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteBudget(@PathVariable final String id) {
+    public ResponseEntity<Void> deleteGroup(@PathVariable final String id) {
         this.deleteGroupProcessor.deleteGroup(id);
         return ResponseEntity.ok().build();
     }

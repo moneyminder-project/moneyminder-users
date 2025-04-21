@@ -1,5 +1,7 @@
 package com.moneyminder.moneyminderusers.processors.groupRequest;
 
+import com.moneyminder.moneyminderusers.dto.GroupRequestWithBudgetNameDto;
+import com.moneyminder.moneyminderusers.feignClients.BudgetFeignClient;
 import com.moneyminder.moneyminderusers.mappers.GroupRequestMapper;
 import com.moneyminder.moneyminderusers.models.GroupRequest;
 import com.moneyminder.moneyminderusers.persistence.entities.GroupEntity;
@@ -26,8 +28,9 @@ public class SaveGroupRequestProcessor {
     private final GroupRepository groupRepository;
     private final GroupRequestMapper groupRequestMapper;
     private final RetrieveUserProcessor retrieveUserProcessor;
+    private final BudgetFeignClient budgetFeignClient;
 
-    public GroupRequest saveGroupRequest(final GroupRequest groupRequest) {
+    public GroupRequestWithBudgetNameDto saveGroupRequest(final GroupRequest groupRequest) {
         this.checkGroupRequestAttributes(groupRequest);
         Assert.notNull(groupRequest.getGroup(), "Group cannot be null");
         Assert.hasLength(groupRequest.getGroup(), "Group cannot be empty");
@@ -36,11 +39,17 @@ public class SaveGroupRequestProcessor {
 
         groupRequestEntity.setDate(LocalDate.now());
 
-        return this.groupRequestMapper.toModel(this.groupRequestRepository.save(groupRequestEntity));
+        final GroupRequestWithBudgetNameDto groupRequestWithBudgetName = new GroupRequestWithBudgetNameDto();
+        final GroupRequest groupReq = this.groupRequestMapper.toModel(this.groupRequestRepository.save(groupRequestEntity));
+
+        groupRequestWithBudgetName.groupToWithBudgetName(groupReq);
+        final String budgetName = budgetFeignClient.getBudgetNameByGroupId(groupReq.getGroup());
+        groupRequestWithBudgetName.setBudgetName(budgetName);
+        return groupRequestWithBudgetName;
     }
 
-    public List<GroupRequest> saveGroupRequestList(final List<GroupRequest> groupRequestList) {
-        List<GroupRequest> savedGroupRequestList = new ArrayList<>();
+    public List<GroupRequestWithBudgetNameDto> saveGroupRequestList(final List<GroupRequest> groupRequestList) {
+        List<GroupRequestWithBudgetNameDto> savedGroupRequestList = new ArrayList<>();
 
         if (groupRequestList != null && !groupRequestList.isEmpty()) {
             groupRequestList.forEach(groupRequest -> savedGroupRequestList.add(this.saveGroupRequest(groupRequest)));
@@ -49,8 +58,7 @@ public class SaveGroupRequestProcessor {
         return savedGroupRequestList;
     }
 
-
-    public GroupRequest updateGroupRequest(final String id, final GroupRequest groupRequest) {
+    public GroupRequestWithBudgetNameDto updateGroupRequest(final String id, final GroupRequest groupRequest) {
         Assert.isTrue(groupRequest.getId().equals(id), "Group request don't match");
         this.checkGroupRequestAttributes(groupRequest);
 
@@ -68,11 +76,17 @@ public class SaveGroupRequestProcessor {
             this.groupRepository.save(requestGroup);
         }
 
-        return this.groupRequestMapper.toModel(this.groupRequestRepository.save(groupRequestEntity));
+        final GroupRequestWithBudgetNameDto groupRequestWithBudgetName = new GroupRequestWithBudgetNameDto();
+        final GroupRequest groupReq = this.groupRequestMapper.toModel(this.groupRequestRepository.save(groupRequestEntity));
+
+        groupRequestWithBudgetName.groupToWithBudgetName(groupReq);
+        final String budgetName = budgetFeignClient.getBudgetNameByGroupId(groupReq.getGroup());
+        groupRequestWithBudgetName.setBudgetName(budgetName);
+        return groupRequestWithBudgetName;
     }
 
-    public List<GroupRequest> updateGroupRequestList(final List<GroupRequest> groupRequestList) {
-        List<GroupRequest> updatedGroupRequestList = new ArrayList<>();
+    public List<GroupRequestWithBudgetNameDto> updateGroupRequestList(final List<GroupRequest> groupRequestList) {
+        List<GroupRequestWithBudgetNameDto> updatedGroupRequestList = new ArrayList<>();
 
         if (groupRequestList != null && !groupRequestList.isEmpty()) {
             groupRequestList.forEach(groupRequest -> updatedGroupRequestList.add(this.updateGroupRequest(groupRequest.getId(), groupRequest)));

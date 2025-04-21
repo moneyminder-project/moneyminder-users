@@ -36,12 +36,12 @@ public class GroupRequestController {
     }
 
     @PostMapping()
-    public ResponseEntity<GroupRequest> createGroupRequest(@Valid @RequestBody final GroupRequest groupRequest) {
+    public ResponseEntity<GroupRequestWithBudgetNameDto> createGroupRequest(@Valid @RequestBody final GroupRequest groupRequest) {
         return ResponseEntity.ok(this.saveGroupRequestProcessor.saveGroupRequest(groupRequest));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<GroupRequest> updateGroupRequest(@PathVariable final String id, @Valid @RequestBody final GroupRequest groupRequest) {
+    public ResponseEntity<GroupRequestWithBudgetNameDto> updateGroupRequest(@PathVariable final String id, @Valid @RequestBody final GroupRequest groupRequest) {
         return ResponseEntity.ok(this.saveGroupRequestProcessor.updateGroupRequest(id, groupRequest));
     }
 
