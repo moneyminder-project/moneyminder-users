@@ -30,4 +30,5 @@ public class GroupEntity {
 
     @OneToMany(mappedBy = "group", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<GroupRequestEntity> groupRequests;
+
 }
