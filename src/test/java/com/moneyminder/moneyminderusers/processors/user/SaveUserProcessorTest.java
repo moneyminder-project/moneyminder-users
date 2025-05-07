@@ -1,6 +1,6 @@
 package com.moneyminder.moneyminderusers.processors.user;
 
-import com.moneyminder.moneyminderexpenses.utils.AuthUtils;
+import com.moneyminder.moneyminderusers.utils.AuthUtils;
 import com.moneyminder.moneyminderusers.dto.UserUpdateRequestDto;
 import com.moneyminder.moneyminderusers.mappers.UserMapper;
 import com.moneyminder.moneyminderusers.models.User;

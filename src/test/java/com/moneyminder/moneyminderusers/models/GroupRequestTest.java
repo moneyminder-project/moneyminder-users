@@ -99,6 +99,9 @@ class GroupRequestTest {
     @Test
     @DisplayName("Users not blank test")
     void testGroupRequestValidationPassWhenAllFieldsAreValid() {
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        validator = factory.getValidator();
+
         GroupRequest request = GroupRequest.builder()
                 .id("5")
                 .group("groupId202")
