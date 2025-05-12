@@ -73,6 +73,7 @@ public class SaveGroupRequestProcessor {
             final GroupEntity requestGroup = groupRequestEntity.getGroup();
             final UserEntity requestedUser = this.retrieveUserProcessor.retrieveCompleteUserByUsernameOrEmail(groupRequest.getRequestedUser());
             requestGroup.getUsers().add(requestedUser);
+            groupRequestEntity.setResolvedDate(LocalDate.now());
             this.groupRepository.save(requestGroup);
         }
 
