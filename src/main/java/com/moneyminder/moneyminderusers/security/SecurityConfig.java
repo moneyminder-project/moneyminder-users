@@ -32,25 +32,18 @@ import java.util.Base64;
 public class SecurityConfig {
 
     @Bean
-    @Order(1)
     public SecurityFilterChain publicEndpoints(HttpSecurity http) throws Exception {
         return http
-                .securityMatcher(
-                        "/auth/login",
-                        "/user/new-user",
-                        "/.well-known/jwks.json",
-                        "/swagger-ui/**",
-                        "/v3/api-docs/**")
-                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll())
-                .csrf(AbstractHttpConfigurer::disable)
-                .build();
-    }
-
-    @Bean
-    @Order(2)
-    public SecurityFilterChain securedEndpoints(HttpSecurity http) throws Exception {
-        return http
-                .authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(
+                                "/auth/login",
+                                "/user/new-user",
+                                "/.well-known/jwks.json",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**"
+                        ).permitAll()
+                        .anyRequest().authenticated()
+                )
                 .csrf(AbstractHttpConfigurer::disable)
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
                 .build();

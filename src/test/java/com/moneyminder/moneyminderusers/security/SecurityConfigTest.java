@@ -63,7 +63,7 @@ class SecurityConfigTest {
         when(httpSecurity.oauth2ResourceServer(any())).thenReturn(httpSecurity);
         when(httpSecurity.build()).thenReturn(mock(DefaultSecurityFilterChain.class));
 
-        SecurityFilterChain chain = securityConfig.securedEndpoints(httpSecurity);
+        SecurityFilterChain chain = securityConfig.publicEndpoints(httpSecurity);
 
         assertNotNull(chain);
     }
