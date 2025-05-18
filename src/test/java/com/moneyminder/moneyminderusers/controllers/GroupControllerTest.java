@@ -21,6 +21,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -143,7 +144,7 @@ class GroupControllerTest {
         group.setId("group1");
         group.setName("Updated Group");
 
-        Mockito.when(saveGroupProcessor.saveGroup(any(Group.class)))
+        Mockito.when(saveGroupProcessor.updateGroup(eq("group1"), any(Group.class)))
                 .thenReturn(group);
 
         mockMvc.perform(put("/group/group1")
