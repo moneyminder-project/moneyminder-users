@@ -2,6 +2,8 @@ package com.moneyminder.moneyminderusers.controllers;
 
 import com.moneyminder.moneyminderusers.dto.LoginRequestDto;
 import com.moneyminder.moneyminderusers.processors.authServices.AuthenticationService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,11 +18,21 @@ import java.util.Map;
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
+@Tag(name = "Autenticación", description = "Operaciones relacionadas con login y autenticación JWT")
 public class AuthController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequestDto request) {
+    @Operation(
+            summary = "Inicio de sesión",
+            description = "Permite al usuario autenticarse con sus credenciales y obtener un token JWT si son válidas"
+    )
+    public ResponseEntity<?> login(
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    description = "Credenciales de acceso",
+                    required = true
+            )
+            @RequestBody LoginRequestDto request) {
         try {
             final String token = authenticationService.authenticationMethod(request);
 
